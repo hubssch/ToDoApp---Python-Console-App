@@ -1,3 +1,5 @@
+import datetime
+
 taskArray = []
 valid_statuses = ["ToDo", "In Progress", "Done"]
 
@@ -12,11 +14,27 @@ while True:
             break
         print("Invalid status! Please enter 'ToDo', 'In Progress' or 'Done'.")
 
-    task = {'name': name, 'status': status}
-    taskArray.append(task)
+    while True:
+        taskDueDate = input("Enter due date (DD.MM.YYYY): ")
+        try:
+            taskDueDate = datetime.datetime.strptime(taskDueDate, "%d.%m.%Y").date()
+            if taskDueDate < datetime.date.today():
+                print("Due date cannot be in the past! Try again.")
+            else:
+                break
+        except ValueError:
+            print("Invalid date format! Use DD.MM.YYYY.")
 
+    taskInputDate = datetime.date.today()  # Data utworzenia zadania
+
+    task = {
+        'name': name,
+        'status': status,
+        'taskInputDate': taskInputDate.strftime('%d.%m.%Y'),  # Zmieniony format
+        'taskDueDate': taskDueDate.strftime('%d.%m.%Y')  # Zmieniony format
+    }
+    taskArray.append(task)
 
 print("\nYour tasks:")
 for task in taskArray:
-    print(f"- {task['name']} [{task['status']}]")  # Formatowane wyświetlanie listy
-
+    print(f"- {task['name']} [{task['status']}] Created: {task['taskInputDate']} | Due: {task['taskDueDate']}")
