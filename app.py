@@ -2,7 +2,8 @@ import datetime
 
 taskArray = []
 valid_statuses = ["ToDo", "In Progress", "Done"]
-file = open('ToDo.txt', 'a')
+file = open('./ToDo.txt', 'a')
+
 
 while True:
     name = input("Add new task (or type 'quit' to exit): ")
@@ -35,11 +36,12 @@ while True:
         'taskDueDate': taskDueDate.strftime('%d.%m.%Y')  # Zmieniony format
     }
     taskArray.append(task)
-    # file.write(str(f'\n{task}'))
     file.write(f"\n- {task['name']} [{task['status']}] Created: {task['taskInputDate']} | Due: {task['taskDueDate']}")
-    # file.close()
-    
 
-print("\nYour tasks:")
+
+readFile = open('./ToDo.txt', 'r')
+print(f"\nYour tasks:{readFile.read()}")
+
+print('\nNew task added:')
 for task in taskArray:
     print(f"- {task['name']} [{task['status']}] Created: {task['taskInputDate']} | Due: {task['taskDueDate']}")
