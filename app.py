@@ -35,7 +35,8 @@ while True:
         'taskDueDate': taskDueDate.strftime('%d.%m.%Y')  # Zmieniony format
     }
     taskArray.append(task)
-    file.write(str(f'\n{task}'))
+    # file.write(str(f'\n{task}'))
+    file.write(f"\n- {task['name']} [{task['status']}] Created: {task['taskInputDate']} | Due: {task['taskDueDate']}")
     # file.close()
     
 
