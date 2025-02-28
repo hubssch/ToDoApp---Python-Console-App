@@ -1,9 +1,7 @@
 import datetime
+from CRUD import createTask
 
 taskArray = []
-valid_statuses = ["ToDo", "In Progress", "Done"]
-file = open('./ToDo.txt', 'a')
-
 
 while True:
     name = input("Add new task (or type 'quit' to exit): ")
@@ -12,35 +10,23 @@ while True:
 
     while True:
         status = input("Set task status (ToDo, In Progress, Done): ")
-        if status in valid_statuses:
+        if status in ["ToDo", "In Progress", "Done"]:
             break
         print("Invalid status! Please enter 'ToDo', 'In Progress' or 'Done'.")
 
     while True:
         taskDueDate = input("Enter due date (DD.MM.YYYY): ")
         try:
-            taskDueDate = datetime.datetime.strptime(taskDueDate, "%d.%m.%Y").date()
-            if taskDueDate < datetime.date.today():
-                print("Due date cannot be in the past! Try again.")
-            else:
-                break
+            datetime.datetime.strptime(taskDueDate, "%d.%m.%Y").date()
+            break
         except ValueError:
             print("Invalid date format! Use DD.MM.YYYY.")
 
-    taskInputDate = datetime.date.today()  # Data utworzenia zadania
-
-    task = {
-        'name': name,
-        'status': status,
-        'taskInputDate': taskInputDate.strftime('%d.%m.%Y'),  # Zmieniony format
-        'taskDueDate': taskDueDate.strftime('%d.%m.%Y')  # Zmieniony format
-    }
+    task = createTask(name, status, taskDueDate)
     taskArray.append(task)
-    file.write(f"\n- {task['name']} [{task['status']}] Created: {task['taskInputDate']} | Due: {task['taskDueDate']}")
 
-
-readFile = open('./ToDo.txt', 'r')
-print(f"\nYour tasks:{readFile.read()}")
+with open('./ToDo.txt', 'r') as readFile:
+    print(f"\nYour tasks:{readFile.read()}")
 
 print('\nNew task added:')
 for task in taskArray:
