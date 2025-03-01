@@ -12,10 +12,16 @@ def create_task(name: str, status: str, task_input_date: datetime, task_due_date
         'task_due_date': task_due_date
     }
     taskArray.append(task)
+    with open('./ToDo.txt', 'a') as file:
+        for index, task in enumerate(taskArray, start=1):
+            file.write(
+                f"\n- {index}. {task['name']} [{task['status']}] Created: {task['task_input_date']} | Due: {task['task_due_date']}")
 
 def read_tasks():
-    for index, task in enumerate(taskArray, start = 1):
-        print(f"- {index}. {task['name']} [{task['status']}] Created: {task['task_input_date']} | Due: {task['task_due_date']}")
+    with open('./ToDo.txt', 'r') as file:
+        print(file.read())
+    # for index, task in enumerate(taskArray, start = 1):
+    #     print(f"- {index}. {task['name']} [{task['status']}] Created: {task['task_input_date']} | Due: {task['task_due_date']}")
 
 def update_task(task_number: int, new_name: str, new_status: str, new_task_due_date: datetime):
     index = task_number - 1
