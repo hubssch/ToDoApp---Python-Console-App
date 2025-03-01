@@ -4,17 +4,17 @@ taskArray = []
 valid_statuses = ["ToDo", "In Progress", "Done"]
 
 
-def createTask(name: str, status: str, taskInputDate: datetime, taskDueDate: datetime):
+def create_task(name: str, status: str, task_input_date: datetime, task_due_date: datetime):
     task = {
         'name': name,
         'status': status,
-        'taskInputDate': taskInputDate,
-        'taskDueDate': taskDueDate
+        'task_input_date': task_input_date,
+        'task_due_date': task_due_date
     }
     taskArray.append(task)
-    for task in taskArray:
-        print(f"- {task['name']} [{task['status']}] Created: {task['taskInputDate']} | Due: {task['taskDueDate']}")
 
-def readTasks():
+def read_tasks():
     for task in taskArray:
-        print(f"- {task['name']} [{task['status']}] Created: {task['taskInputDate']} | Due: {task['taskDueDate']}")
+        print(f"- {task['name']} [{task['status']}] Created: {task['task_input_date']} | Due: {task['task_due_date']}")
+
+def update_task():

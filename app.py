@@ -1,4 +1,4 @@
-from CRUD import createTask, readTasks, valid_statuses
+from CRUD import create_task, read_tasks, update_task, valid_statuses
 import datetime
 
 while True:
@@ -20,8 +20,11 @@ while True:
             inputDate = datetime.date.today()
             dueDate = input("Enter due date (DD.MM.YYYY): ")
 
-            createTask(name, status, inputDate, dueDate)
+            create_task(name, status, inputDate, dueDate)
             break
 
     elif action.lower() == 'read tasks':
-        readTasks()
+        read_tasks()
+
+    elif action.lower() == 'update task':
+        update_task()
