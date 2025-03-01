@@ -1,4 +1,4 @@
-from CRUD import create_task, read_tasks, update_task, valid_statuses
+from CRUD import create_task, read_tasks, update_task, valid_statuses, taskArray
 import datetime
 
 while True:
@@ -27,4 +27,12 @@ while True:
         read_tasks()
 
     elif action.lower() == 'update task':
-        update_task()
+        task_number = int(input("Enter the task number to edit: "))
+
+        new_name = input("Edit task name: ")
+
+        new_status = input("Set task status (ToDo, In Progress, Done): ")
+
+        new_task_due_date = input("Enter new due date (DD.MM.YYYY): ")
+
+        update_task(task_number, new_name, new_status, new_task_due_date)
