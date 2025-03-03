@@ -1,5 +1,5 @@
-from CRUD import create_task, read_tasks, update_task, valid_statuses, taskArray
 import datetime
+from CRUD import create_task, read_tasks, update_task, valid_statuses, taskArray
 
 while True:
     action = input('What do you want to do? (create task, read tasks, delete task, update task or quit): ')
@@ -17,10 +17,16 @@ while True:
                 print("Invalid status! Please enter 'ToDo', 'In Progress' or 'Done'.")
                 continue 
 
-            inputDate = datetime.date.today()
-            dueDate = input("Enter due date (DD.MM.YYYY): ")
+            input_date = datetime.date.today()
+            
+            due_date = input("Enter due date (DD.MM.YYYY): ")
+            try:
+                due_date_parsed = datetime.datetime.strptime(due_date, "%d.%m.%Y").date()
+            except ValueError:
+                print("Invalid date format! Please use DD.MM.YYYY.")
+                continue  
 
-            create_task(name, status, inputDate, dueDate)
+            create_task(name, status, input_date, due_date_parsed)
             break
 
     elif action.lower() == 'read tasks':
@@ -34,5 +40,10 @@ while True:
         new_status = input("Set task status (ToDo, In Progress, Done): ")
 
         new_task_due_date = input("Enter new due date (DD.MM.YYYY): ")
+        try:
+            new_task_due_date_parsed = datetime.datetime.strptime(new_task_due_date, "%d.%m.%Y").date()
+        except ValueError:
+            print("Invalid date format! Please use DD.MM.YYYY.")
+            continue
 
-        update_task(task_number, new_name, new_status, new_task_due_date)
+        update_task(task_number, new_name, new_status, new_task_due_date_parsed)

@@ -1,29 +1,53 @@
 import datetime
+import os
 
 taskArray = []
 valid_statuses = ["ToDo", "In Progress", "Done"]
+file_path = './ToDo.txt'
 
+# def load_tasks():
+#     """Wczytuje istniejące zadania z pliku do taskArray."""
+#     if not os.path.exists(file_path):
+#         return  # Jeśli plik nie istnieje, nie rób nic
 
-def create_task(name: str, status: str, task_input_date: datetime, task_due_date: datetime):
-    task = {
+#     with open(file_path, 'r') as file:
+#         for line in file:
+#             parts = line.strip().split(' | ')
+#             if len(parts) == 3:
+#                 name_status = parts[0].split(' ', 1)
+#                 if len(name_status) < 2:
+#                     continue
+                
+#                 name = name_status[1].split('[')[0].strip()
+#                 status = name_status[1].split('[')[-1].replace(']', '').strip()
+#                 created_date = parts[1].split(': ')[-1].strip()
+#                 due_date = parts[2].split(': ')[-1].strip()
+
+#                 taskArray.append({
+#                     'name': name,
+#                     'status': status,
+#                     'task_input_date': created_date,
+#                     'task_due_date': due_date
+#                 })
+
+def create_task(name: str, status: str, task_input_date: datetime.date, task_due_date: datetime.date):
+    
+    new_task = {
         'name': name,
         'status': status,
         'task_input_date': task_input_date,
         'task_due_date': task_due_date
     }
-    taskArray.append(task)
-    with open('./ToDo.txt', 'a') as file:
+    
+    taskArray.append(new_task)
+    save_tasks()  # Zapisujemy zadania po dodaniu nowego
+
+def save_tasks():
+    with open(file_path, 'w') as file:
         for index, task in enumerate(taskArray, start=1):
-            file.write(
-                f"\n- {index}. {task['name']} [{task['status']}] Created: {task['task_input_date']} | Due: {task['task_due_date']}")
+            file.write(f"- {index}. {task['name']} [{task['status']}] | Created: {task['task_input_date']} | Due: {task['task_due_date']}\n")
 
-def read_tasks():
-    with open('./ToDo.txt', 'r') as file:
-        print(file.read())
-    # for index, task in enumerate(taskArray, start = 1):
-    #     print(f"- {index}. {task['name']} [{task['status']}] Created: {task['task_input_date']} | Due: {task['task_due_date']}")
-
-def update_task(task_number: int, new_name: str, new_status: str, new_task_due_date: datetime):
+def update_task(task_number: int, new_name: str, new_status: str, new_task_due_date: datetime.date):
     index = task_number - 1
     if 0 <= index < len(taskArray):
         if new_name:
@@ -35,3 +59,7 @@ def update_task(task_number: int, new_name: str, new_status: str, new_task_due_d
         print(f"Task {task_number} updated successfully!")
     else:
         print("Invalid task number!")
+
+def read_tasks():
+    with open(file_path, 'r') as file:
+        print(file.read())
